@@ -230,9 +230,7 @@ const loading = ref(false)
 // 定义请求参数对象
 const params = ref({
   pagenum: 1, // 当前页
-  pagesize: 8, // 当前生效的每页条数
-  cate_id: '',
-  state: ''
+  pagesize: 13 // 当前生效的每页条数
 })
 
 // 计算当前页要显示的数据
@@ -266,7 +264,7 @@ const onCurrentChange = (page) => {
     <el-table
       v-loading="loading"
       :data="paginatedData"
-      height="350"
+      height="570"
       style="width: 100%"
     >
       <el-table-column type="selection" width="55"></el-table-column>
@@ -307,7 +305,7 @@ const onCurrentChange = (page) => {
 
 <style lang="scss" scoped>
 .page-container {
-  max-width: 2000px;
+  max-width: 100%;
   min-height: 100%;
   box-sizing: border-box;
   border-radius: 10px;

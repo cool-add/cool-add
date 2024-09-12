@@ -155,7 +155,7 @@ const pageTitle = computed(() => {
     display: flex; /* 使右侧内容在一行显示 */
     gap: 20px; /* 按钮之间的间距 */
     align-items: center; /* 垂直居中 */
-    margin-left: 340px;
+    margin-left: 480px;
   }
 
   .search-container {
@@ -169,12 +169,5 @@ const pageTitle = computed(() => {
   .el-icon {
     margin-right: 5px; /* 图标与文本之间的间距 */
   }
-  //   .el-footer {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  //     font-size: 14px;
-  //     color: #101c44;
-  //   }
 }
 </style>
