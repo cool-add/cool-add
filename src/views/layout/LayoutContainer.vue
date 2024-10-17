@@ -1,9 +1,22 @@
 <script setup>
 import avatar from '@/assets/个人.png'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { getSearchAPI } from '@/api/usermanage'
 
 const route = useRoute()
+
+const userid = ref('')
+const applicant = ref(null)
+// 通过ID查询申请人信息
+const getUser = async () => {
+  const response = await getSearchAPI({
+    params: {
+      userid: userid.value
+    }
+  })
+  applicant.value = response.data
+}
 
 // 根据当前路由的 meta 信息动态获取标题
 const pageTitle = computed(() => {
@@ -55,7 +68,7 @@ const pageTitle = computed(() => {
               <el-input style="padding-left: 40px">
                 <template #append>
                   <el-icon style="cursor: pointer">
-                    <Search />
+                    <Search @click="getUser(userId)" />
                   </el-icon>
                 </template>
               </el-input>

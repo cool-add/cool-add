@@ -1,10 +1,19 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
+import { getCarAPI } from '@/api/booking'
+import { applicantAPI } from '@/api/usermanage'
 
 const activeSegment = ref('personal') // 默认选择个人/单位预约
 
 // 获取后端返回的数据
-// const person = ref([])
+const person = ref([])
+// 门的映射关系
+const doorEnum = {
+  1: '东门',
+  2: '西门',
+  3: '南门',
+  4: '北门'
+}
 
 //#region 头部切换栏
 
@@ -23,434 +32,6 @@ const setActiveSegment = (segment) => {
 }
 //#endregion
 
-//#region 申请人信息数据
-
-const tableData = ref([
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  },
-  {
-    person: '彭于晏',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-10',
-    address: '北门',
-    people: '3',
-    todo: '开会'
-  }
-])
-//#endregion
-
-//#region 车辆信息数据
-const carData = ref([
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  },
-  {
-    person: '成龙',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-19',
-    address: '东门',
-    people: '5',
-    todo: '开会、吃饭',
-    carnumber: '桂A666666'
-  },
-  {
-    person: '马克思',
-    iphone: '1201191108',
-    idnumber: '430820233040506813',
-    datatime: '2024-09-14',
-    address: '西门',
-    people: '5',
-    todo: '开会、吃饭、睡觉',
-    carnumber: '桂A888888'
-  }
-])
-
-//#endregion
-
 // 定义请求参数对象
 const params = ref({
   pagenum: 1, // 当前页
@@ -460,12 +41,8 @@ const params = ref({
 //#region 个人/单位页面
 
 // 计算当前页要显示的数据
-const paginatedData = computed(() => {
-  const start = (params.value.pagenum - 1) * params.value.pagesize
-  return tableData.value.slice(start, start + params.value.pagesize)
-})
 
-const totalItems = ref(tableData.value.length)
+const totalItems = ref(person.value.length)
 // 分页处理
 const onCurrentChange = (page) => {
   params.value.pagenum = page
@@ -474,11 +51,26 @@ const onCurrentChange = (page) => {
 
 //#region 车辆页面
 
+// 获取预约人信息
+const bookingList = ref([])
+
+const bookingAPI = async () => {
+  const res = await getCarAPI()
+
+  bookingList.value = res.data.data
+  console.log(bookingList.value)
+}
+bookingAPI()
+
+// 导入申请人信息
+const getApplicant = async () => {
+  const res = await applicantAPI()
+
+  person.value = res.data.data
+}
+getApplicant()
+
 // 计算当前页要显示的数据
-const carsData = computed(() => {
-  const start = (params.value.pagenum - 1) * params.value.pagesize
-  return carData.value.slice(start, start + params.value.pagesize)
-})
 
 // 分页处理
 const oncurrentchange = (page) => {
@@ -527,9 +119,13 @@ const approvalDate = ref('2024-7-21')
   <div v-if="activeSegment === 'personal'">
     <div class="bigbox">
       <el-card>
-        <div class="card-header">
+        <div
+          v-for="booking in bookingList"
+          :key="booking.id"
+          class="card-header"
+        >
           <div class="header-left">
-            <span>序号：123456</span>
+            <span>序号：{{ booking.carId }}</span>
           </div>
           <div class="header-right">
             <span>状态：</span>
@@ -537,9 +133,13 @@ const approvalDate = ref('2024-7-21')
           </div>
         </div>
 
-        <div class="applicant-info">
+        <div
+          v-for="booking in bookingList"
+          :key="booking.id"
+          class="applicant-info"
+        >
           <div class="info-row">
-            <div class="info-column">申请人:喜洋洋</div>
+            <div class="info-column">申请人:{{ booking.name }}</div>
             <div class="info-column">申请单位:青青草原</div>
             <div class="info-column">申请人电话:1314520</div>
             <div class="info-column">申请日期:2024-5-20 9:00-12:00</div>
@@ -579,36 +179,45 @@ const approvalDate = ref('2024-7-21')
           <span>申请人信息</span>
         </div>
 
-        <el-table :data="paginatedData" height="245">
+        <el-table
+          v-loading="loading"
+          :data="person"
+          height="570"
+          style="width: 100%"
+        >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
             label="序号"
             type="index"
-            width="60"
+            width="100"
           ></el-table-column>
-          <el-table-column label="申请人" prop="person"></el-table-column>
+          <el-table-column label="申请人" prop="name"></el-table-column>
+          <el-table-column label="电话" prop="phone"></el-table-column>
           <el-table-column
-            label="电话"
-            width="150"
-            prop="iphone"
-          ></el-table-column>
-          <el-table-column
-            label="身份证号"
-            width="200"
-            prop="idnumber"
+            label="身份证号码"
+            width="220"
+            prop="identityCard"
           ></el-table-column>
           <el-table-column
             label="申请日期"
-            prop="datatime"
-            width="130"
+            width="120"
+            prop="date"
           ></el-table-column>
-          <el-table-column label="选择门区" prop="address"></el-table-column>
-          <el-table-column label="随行人数" prop="people"></el-table-column>
+          <el-table-column label="选择门区">
+            <!-- 使用枚举映射 door 值为中文门区名 -->
+            <template #default="scope">
+              {{ doorEnum[scope.row.door] || '未知门' }}
+            </template>
+          </el-table-column>
           <el-table-column
-            label="入校目的"
-            width="100"
-            prop="todo"
+            label="随行人数"
+            prop="numberPeople"
           ></el-table-column>
+          <el-table-column label="入校目的" prop="objective"></el-table-column>
+
+          <template #empty>
+            <el-empty description="没有数据"></el-empty>
+          </template>
         </el-table>
 
         <!-- 分页区 -->
@@ -632,8 +241,12 @@ const approvalDate = ref('2024-7-21')
     <div class="bigbox">
       <el-card>
         <div class="card-header">
-          <div class="header-left">
-            <span>序号：123456</span>
+          <div
+            v-for="booking in bookingList"
+            :key="booking.id"
+            class="header-left"
+          >
+            <span>序号：{{ booking.carId }}</span>
           </div>
           <div class="header-right">
             <span>状态：</span>
@@ -641,18 +254,22 @@ const approvalDate = ref('2024-7-21')
           </div>
         </div>
 
-        <div class="applicant-info">
+        <div
+          v-for="booking in bookingList"
+          :key="booking.id"
+          class="applicant-info"
+        >
           <div class="info-row">
-            <div class="info-column">申请人:喜洋洋</div>
+            <div class="info-column">申请人:{{ booking.name }}</div>
             <div class="info-column">车牌号:桂A666666</div>
-            <div class="info-column">申请人电话:1314520</div>
-            <div class="info-column">申请日期:2024-5-20 9:00-12:00</div>
+            <div class="info-column">申请人电话:{{ booking.phone }}</div>
+            <div class="info-column">申请日期:{{ booking.date }}</div>
           </div>
           <div class="info-row">
             <div class="info-column">申请人身份证号码:5201314</div>
-            <div class="info-column">选择门区:东门</div>
-            <div class="info-column">随行人数:2</div>
-            <div class="info-column">入校目的:食堂送菜</div>
+            <div class="info-column">选择门区:{{ doorEnum[booking.door] }}</div>
+            <div class="info-column">随行人数:{{ booking.numberPeople }}</div>
+            <div class="info-column">入校目的:{{ booking.objective }}</div>
           </div>
         </div>
 
@@ -682,41 +299,45 @@ const approvalDate = ref('2024-7-21')
         <div class="card-header">
           <span>申请人信息</span>
         </div>
-        <el-table :data="carsData" height="245">
+        <el-table
+          v-loading="loading"
+          :data="person"
+          height="570"
+          style="width: 100%"
+        >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
             label="序号"
             type="index"
-            width="60"
-          ></el-table-column>
-          <el-table-column label="申请人" prop="person"></el-table-column>
-          <el-table-column
-            label="电话"
-            width="150"
-            prop="iphone"
-          ></el-table-column>
-          <el-table-column
-            label="车牌号"
             width="100"
-            prop="carnumber"
           ></el-table-column>
+          <el-table-column label="申请人" prop="name"></el-table-column>
+          <el-table-column label="电话" prop="phone"></el-table-column>
           <el-table-column
-            label="身份证号"
-            width="200"
-            prop="idnumber"
+            label="身份证号码"
+            width="220"
+            prop="identityCard"
           ></el-table-column>
           <el-table-column
             label="申请日期"
-            prop="datatime"
-            width="130"
+            width="120"
+            prop="date"
           ></el-table-column>
-          <el-table-column label="选择门区" prop="address"></el-table-column>
-          <el-table-column label="随行人数" prop="people"></el-table-column>
+          <el-table-column label="选择门区">
+            <!-- 使用枚举映射 door 值为中文门区名 -->
+            <template #default="scope">
+              {{ doorEnum[scope.row.door] || '未知门' }}
+            </template>
+          </el-table-column>
           <el-table-column
-            label="入校目的"
-            width="180"
-            prop="todo"
+            label="随行人数"
+            prop="numberPeople"
           ></el-table-column>
+          <el-table-column label="入校目的" prop="objective"></el-table-column>
+
+          <template #empty>
+            <el-empty description="没有数据"></el-empty>
+          </template>
         </el-table>
 
         <!-- 分页区 -->

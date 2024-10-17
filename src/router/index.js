@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useUserStore } from '@/stores'
+// import { useUserStore } from '@/stores'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/login', component: () => import('@/views/login/LoginPage.vue') }, //登录页
+    // { path: '/login', component: () => import('@/views/login/LoginPage.vue') }, //登录页
     {
       path: '/',
       component: () => import('@/views/layout/LayoutContainer.vue'),
@@ -55,10 +55,10 @@ const router = createRouter({
 // 2. false 拦截回from的地址页
 // 3. 具体路径 或 路径对象 拦截到对应的地址
 //   '/login'  或  { name:'login' }
-router.beforeEach((to) => {
-  // 如果没有token，且访问的是非登录页，拦截到登录，其他情况正常发行
-  const useStore = useUserStore()
-  if (!useStore.token && to.path !== '/login') return '/login'
-})
+// router.beforeEach((to) => {
+//   // 如果没有token，且访问的是非登录页，拦截到登录，其他情况正常发行
+//   const useStore = useUserStore()
+//   if (!useStore.token && to.path !== '/login') return '/login'
+// })
 
 export default router
