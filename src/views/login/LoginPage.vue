@@ -1,5 +1,7 @@
 <script setup>
 //登录接口import { userLoginService } from '@/api/user.js'
+import { userLoginService } from '@/api/user'
+import { useUserStore } from '@/stores'
 import { User, Lock, Iphone } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 //获取用户数据import { useUserStore } from '@/stores'
@@ -23,8 +25,8 @@ const rules = {
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     {
-      pattern: /^\S{6,15}$/,
-      message: '密码必须是 6-15位 的非空字符',
+      pattern: /^\S{5,15}$/,
+      message: '密码必须是 5-15位 的非空字符',
       trigger: 'blur'
     }
   ],
@@ -42,13 +44,15 @@ const rules = {
 //   await userCodeService(formModel.value)
 //   ElMessage.success('登陆成功')
 // }
-// const userStore = useUserStore()
+const userStore = useUserStore()
 const router = useRouter()
 const login = async () => {
   await form.value.validate()
-  // const res = await userLoginService(formModel.value)
-  // userStore.setToken(res.data.token)
+  const res = await userLoginService(formModel.value)
+  // 将用户信息存入仓库，存入本地
+  userStore.setToken(res.data.token)
   ElMessage.success('登录成功')
+  // 路由跳转
   router.push('/')
 }
 
@@ -160,7 +164,7 @@ watch(isRegister, () => {
         </el-form-item>
         <el-form-item>
           <el-button
-            @click="login"
+            @click="login()"
             class="button"
             type="primary"
             auto-insert-space

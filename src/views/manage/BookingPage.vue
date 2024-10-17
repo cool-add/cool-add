@@ -56,9 +56,7 @@ const bookingList = ref([])
 
 const bookingAPI = async () => {
   const res = await getCarAPI()
-
   bookingList.value = res.data.data
-  console.log(bookingList.value)
 }
 bookingAPI()
 
@@ -119,13 +117,9 @@ const approvalDate = ref('2024-7-21')
   <div v-if="activeSegment === 'personal'">
     <div class="bigbox">
       <el-card>
-        <div
-          v-for="booking in bookingList"
-          :key="booking.id"
-          class="card-header"
-        >
+        <div class="card-header">
           <div class="header-left">
-            <span>序号：{{ booking.carId }}</span>
+            <span>序号：1</span>
           </div>
           <div class="header-right">
             <span>状态：</span>
@@ -133,13 +127,9 @@ const approvalDate = ref('2024-7-21')
           </div>
         </div>
 
-        <div
-          v-for="booking in bookingList"
-          :key="booking.id"
-          class="applicant-info"
-        >
+        <div class="applicant-info">
           <div class="info-row">
-            <div class="info-column">申请人:{{ booking.name }}</div>
+            <div class="info-column">申请人:哈哈</div>
             <div class="info-column">申请单位:青青草原</div>
             <div class="info-column">申请人电话:1314520</div>
             <div class="info-column">申请日期:2024-5-20 9:00-12:00</div>
@@ -241,12 +231,8 @@ const approvalDate = ref('2024-7-21')
     <div class="bigbox">
       <el-card>
         <div class="card-header">
-          <div
-            v-for="booking in bookingList"
-            :key="booking.id"
-            class="header-left"
-          >
-            <span>序号：{{ booking.carId }}</span>
+          <div class="header-left">
+            <span>序号:2</span>
           </div>
           <div class="header-right">
             <span>状态：</span>
@@ -254,22 +240,18 @@ const approvalDate = ref('2024-7-21')
           </div>
         </div>
 
-        <div
-          v-for="booking in bookingList"
-          :key="booking.id"
-          class="applicant-info"
-        >
+        <div class="applicant-info">
           <div class="info-row">
-            <div class="info-column">申请人:{{ booking.name }}</div>
-            <div class="info-column">车牌号:桂A666666</div>
-            <div class="info-column">申请人电话:{{ booking.phone }}</div>
-            <div class="info-column">申请日期:{{ booking.date }}</div>
+            <div class="info-column">申请人:哈哈</div>
+            <div class="info-column">申请单位:青青草原</div>
+            <div class="info-column">申请人电话:1314520</div>
+            <div class="info-column">申请日期:2024-5-20 9:00-12:00</div>
           </div>
           <div class="info-row">
             <div class="info-column">申请人身份证号码:5201314</div>
-            <div class="info-column">选择门区:{{ doorEnum[booking.door] }}</div>
-            <div class="info-column">随行人数:{{ booking.numberPeople }}</div>
-            <div class="info-column">入校目的:{{ booking.objective }}</div>
+            <div class="info-column">选择门区:北门</div>
+            <div class="info-column">随行人数:2</div>
+            <div class="info-column">入校目的:超市送货</div>
           </div>
         </div>
 

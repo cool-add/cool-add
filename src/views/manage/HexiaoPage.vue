@@ -2,9 +2,10 @@
 // import { getFaceAPI, getHistoryAPI } from '@/api/hexiao'
 import { ref } from 'vue'
 // import { useRoute } from 'vue-router'
-import { applicantAPI, artList, getExcelAPI, getNotAPI } from '@/api/usermanage'
+import { artList, getNotAPI } from '@/api/usermanage'
 // import ChannelEdit from './components/ChannelEdit.vue'
 import axios from 'axios'
+import { getHexiaoAPI } from '@/api/hexiao'
 
 const ListData = ref([])
 const dialogVisible = ref(false)
@@ -32,32 +33,27 @@ const resetForm = () => {
   }
 }
 
+// 核销方式的映射关系
+const HexiaoEnum = {
+  face: '人脸核销',
+  qr_code: '二维码核销'
+}
+
 // 查询未通过的人员名单
 const getNotuser = async () => {
   const res = await getNotAPI()
   ListData.value = res.data.data
 }
 
-const getExcel = async () => {
-  const response = getExcelAPI({ responseType: 'blob' })
-  // 创建一个链接，并下载文件
-  const blob = new Blob([response.data], {
-    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  })
-  const url = window.URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.setAttribute('download', 'applicants.xlsx') // 设置下载文件名
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link) // 下载完成后移除链接
-  window.URL.revokeObjectURL(url) // 释放 Blob URL
+const getExcel = () => {
+  // 跳转到指定网址
+  window.location.href = 'http://120.77.178.195:8088/applicant/export'
 }
 
-// 获取申请人数据
+// 获取核销人数据
 const getApplicant = async () => {
-  const res = await applicantAPI()
-  // console.log(res)
+  const res = await getHexiaoAPI()
+
   ListData.value = res.data.data
 }
 getApplicant()
@@ -68,7 +64,12 @@ const submitApplicant = async () => {
     const response = await axios.post(
       'http://120.77.178.195:8088/applicant/add',
       {
-        applicants: applicant.value
+        name: applicant.value.name,
+        phone: applicant.value.phone,
+        identityCard: applicant.value.identityCard,
+        door: applicant.value.door,
+        numberPeople: applicant.value.numberPeople,
+        objective: applicant.value.objective
       }
     )
 
@@ -405,17 +406,14 @@ const onCurrentChange = (page) => {
     <el-table :data="ListData" style="width: 100%" height="600">
       <el-table-column type="selection" width="55" />
       <el-table-column label="序号" type="index" width="60" />
-      <el-table-column label="申请人" prop="name" />
+      <el-table-column label="申请人" prop="user" />
       <el-table-column label="电话" width="100" prop="phone" />
-      <el-table-column label="身份证号码" prop="identityCard" width="200" />
-      <el-table-column label="申请日期" prop="date" width="200" />
+      <el-table-column label="身份证号码" prop="identity" width="200" />
+      <el-table-column label="申请日期" prop="verificationTime" width="200" />
       <!-- 核销方式列 -->
       <el-table-column label="核销方式">
-        <template #default="{ row }">
-          <el-radio-group v-model="row.verificationType">
-            <el-radio label="刷脸核销">刷脸核销</el-radio>
-            <el-radio label="二维码核销">二维码核销</el-radio>
-          </el-radio-group>
+        <template #default="scope">
+          {{ HexiaoEnum[scope.row.verificationType] }}
         </template>
       </el-table-column>
 
@@ -425,11 +423,11 @@ const onCurrentChange = (page) => {
           <div class="status-container">
             <el-badge
               :style="{
-                backgroundColor: row.isVerified ? 'blue' : 'red'
+                backgroundColor: row.verified ? 'blue' : 'red'
               }"
             ></el-badge>
             <span style="color: black; margin-left: 8px">
-              {{ row.isVerified ? '已核销' : '未核销' }}
+              {{ row.verified ? '已核销' : '未核销' }}
             </span>
           </div>
         </template>

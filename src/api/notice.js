@@ -10,7 +10,7 @@ export const getNoticeAPI = () => {
 
 // 删除公告
 export const DeleteNoticeAPI = (id) =>
-  request.delete('/article/delArticle', {
+  request.delete(`/article/delArticle/${id}`, {
     params: { id }
   })
 

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { applicantAPI, artList, getExcelAPI, getNotAPI } from '@/api/usermanage'
+import { applicantAPI, artList, getNotAPI } from '@/api/usermanage'
 // import ChannelEdit from './components/ChannelEdit.vue'
 import axios from 'axios'
 
@@ -45,28 +45,8 @@ const getNotuser = async () => {
 }
 
 const getExcel = async () => {
-  try {
-    const response = await getExcelAPI()
-    console.log('导出成功')
-    // 检查响应状态
-    if (response.status !== 200) {
-      throw new Error('导出失败，状态码: ' + response.status)
-    }
-
-    const link = document.createElement('a')
-    const url = window.URL.createObjectURL(new Blob([response.data]))
-
-    link.href = url
-    link.setAttribute('download', 'applicants.xlsx')
-
-    document.body.appendChild(link)
-    link.click()
-
-    link.parentNode.removeChild(link)
-    window.URL.revokeObjectURL(url)
-  } catch (error) {
-    console.error('导出失败', error)
-  }
+  // 跳转到指定网址
+  window.location.href = 'http://120.77.178.195:8088/applicant/export'
 }
 
 /// 导入申请人信息
@@ -75,7 +55,12 @@ const submitApplicant = async () => {
     const response = await axios.post(
       'http://120.77.178.195:8088/applicant/add',
       {
-        applicants: applicant.value
+        name: applicant.value.name,
+        phone: applicant.value.phone,
+        identityCard: applicant.value.identityCard,
+        door: applicant.value.door,
+        numberPeople: applicant.value.numberPeople,
+        objective: applicant.value.objective
       }
     )
 
